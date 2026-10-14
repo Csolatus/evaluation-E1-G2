@@ -172,8 +172,17 @@ const filterCourses = () => {
     renderCourses(results);
 };
 
+const debounce = (callback, delay = 300) => {
+    let timer;
+
+    return (...args) => {
+        clearTimeout(timer);
+        timer = setTimeout(() => callback(...args), delay);
+    };
+};
+
 const bindFilters = (searchId, selectIds, callback) => {
-    document.getElementById(searchId).addEventListener('input', callback);
+    document.getElementById(searchId).addEventListener('input', debounce(callback));
     selectIds.forEach((id) => {
         document.getElementById(id).addEventListener('change', callback);
     });
@@ -202,6 +211,7 @@ const initHome = async () => {
         renderProjects(projectsData.projects);
         bindFilters('projects-search', ['projects-tech', 'projects-category'], filterProjects);
     }
+
     if (coursesData) {
         fillSelect('courses-category', getUniqueValues(coursesData.courses, 'category'));
         fillSelect('courses-level', coursesData.levels);
