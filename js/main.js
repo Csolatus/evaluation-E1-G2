@@ -40,7 +40,7 @@ const loadSection = async (url, loaderId, errorId, errorMessage) => {
 
 // ========== AFFICHAGE DES PROJETS ==========
 const createBadges = (items) => items
-    .map((item) => `<li class="badge-tech mono">${item}</li>`)
+    .map((item) => `<li class="badge-tech">${item}</li>`)
     .join('');
 
 const renderProjects = (projects) => {
@@ -59,7 +59,7 @@ const renderProjects = (projects) => {
             <article class="card-item">
                 <img src="${project.image}" alt="Aperçu du projet ${project.title}" class="card-item-img" loading="lazy">
                 <div class="card-item-body">
-                    <p class="card-item-meta mono">${project.category} · ${project.year}</p>
+                    <p class="card-item-meta">${project.category}</p>
                     <h3 class="card-item-title">${project.title}</h3>
                     <p class="card-item-sub">${project.client}</p>
                     <ul class="badge-list" aria-label="Technologies utilisées">${createBadges(project.technologies)}</ul>
@@ -96,17 +96,13 @@ const renderCourses = (courses) => {
                 <img src="${course.image}" alt="Illustration de la formation ${course.title}" class="card-item-img" loading="lazy">
                 <div class="card-item-body">
                     <div class="card-item-top">
-                        <p class="card-item-meta mono">${course.category}</p>
-                        <span class="badge-status mono ${course.available ? 'is-available' : 'is-full'}">${course.available ? 'Disponible' : 'Complet'}</span>
+                        <p class="card-item-meta">${course.category}</p>
+                        <span class="badge-status ${course.available ? 'is-available' : 'is-full'}">${course.available ? 'Disponible' : 'Complet'}</span>
                     </div>
                     <h3 class="card-item-title">${course.title}</h3>
                     <p class="card-item-sub">par ${course.instructor}</p>
-                    <ul class="course-facts mono">
-                        <li class="badge-level">${course.level}</li>
-                        <li>${course.duration}</li>
-                        <li>${course.price} €</li>
-                    </ul>
-                    <p class="course-stats mono">
+                    <p class="card-item-info">${course.level} · ${course.duration} · ${course.price} €</p>
+                    <p class="card-item-info">
                         <span aria-hidden="true">★</span>
                         <span class="visually-hidden">Note :</span> ${course.rating}<span class="visually-hidden"> sur 5</span>
                         · ${course.students} étudiants
@@ -135,6 +131,54 @@ const fillSelect = (selectId, values) => {
     select.insertAdjacentHTML('beforeend', options);
 };
 
+const normalize = (text) => text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+const filterProjects = () => {
+    const search = normalize(document.getElementById('projects-search').value.trim());
+    const tech = document.getElementById('projects-tech').value;
+    const category = document.getElementById('projects-category').value;
+
+    const results = projectsData.projects.filter((project) => {
+        const text = normalize(`${project.title} ${project.client} ${project.description} ${project.technologies.join(' ')}`);
+        const matchSearch = text.includes(search);
+        const matchTech = !tech || project.technologies.includes(tech);
+        const matchCategory = !category || project.category === category;
+
+        return matchSearch && matchTech && matchCategory;
+    });
+
+    renderProjects(results);
+};
+
+const filterCourses = () => {
+    const search = normalize(document.getElementById('courses-search').value.trim());
+    const category = document.getElementById('courses-category').value;
+    const level = document.getElementById('courses-level').value;
+    const tech = document.getElementById('courses-tech').value;
+
+    const results = coursesData.courses.filter((course) => {
+        const text = normalize(`${course.title} ${course.instructor} ${course.description} ${course.technologies.join(' ')}`);
+        const matchSearch = text.includes(search);
+        const matchCategory = !category || course.category === category;
+        const matchLevel = !level || course.level === level;
+        const matchTech = !tech || course.technologies.includes(tech);
+
+        return matchSearch && matchCategory && matchLevel && matchTech;
+    });
+
+    renderCourses(results);
+};
+
+const bindFilters = (searchId, selectIds, callback) => {
+    document.getElementById(searchId).addEventListener('input', callback);
+    selectIds.forEach((id) => {
+        document.getElementById(id).addEventListener('change', callback);
+    });
+};
+
 // ========== INITIALISATION ==========
 const initHome = async () => {
     [projectsData, coursesData] = await Promise.all([
@@ -156,12 +200,14 @@ const initHome = async () => {
         fillSelect('projects-tech', getUniqueValues(projectsData.projects, 'technologies'));
         fillSelect('projects-category', getUniqueValues(projectsData.projects, 'category'));
         renderProjects(projectsData.projects);
+        bindFilters('projects-search', ['projects-tech', 'projects-category'], filterProjects);
     }
     if (coursesData) {
         fillSelect('courses-category', getUniqueValues(coursesData.courses, 'category'));
         fillSelect('courses-level', coursesData.levels);
         fillSelect('courses-tech', getUniqueValues(coursesData.courses, 'technologies'));
-        renderCourses(coursesData.courses)
+        renderCourses(coursesData.courses);
+        bindFilters('courses-search', ['courses-category', 'courses-level', 'courses-tech'], filterCourses);
     }
 };
 

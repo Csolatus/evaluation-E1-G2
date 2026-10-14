@@ -7,7 +7,7 @@
     <title>WebCraft Solutions | Accueil</title>
     <!-- ========== STYLES ========== -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
     <header class="site-header sticky-top">
         <nav class="navbar navbar-expand-md" aria-label="Navigation principale">
             <div class="container">
-                <a class="navbar-brand logo" href="index.html">WebCraft <span class="logo-sub mono">Solutions</span></a>
+                <a class="navbar-brand logo" href="index.html">WebCraft Solutions</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-menu" aria-controls="main-menu" aria-expanded="false" aria-label="Ouvrir le menu">
                     <span class="navbar-toggler-icon"></span>
@@ -41,16 +41,12 @@
 
         <!-- ========== HERO ========== -->
         <section class="hero" id="accueil" aria-labelledby="hero-title">
-            <div class="container">
-                <p class="hero-label mono anim-rise">// studio web &amp; formation</p>
-                <h1 class="hero-title anim-rise" id="hero-title">
-                    Nous concevons des sites.<br>
-                    Nous apprenons à les construire.
-                </h1>
-                <p class="hero-subtitle anim-rise">
+            <div class="container fade-in">
+                <h1 class="hero-title" id="hero-title">Projets clients et formations techniques</h1>
+                <p class="hero-subtitle">
                     Découvrez les projets livrés pour nos clients et notre catalogue de formations techniques, du front-end au DevOps.
                 </p>
-                <div class="hero-actions anim-rise">
+                <div class="hero-actions">
                     <a href="#projets" class="btn-ink">Voir les projets</a>
                     <a href="#formations" class="btn-ink btn-ink--outline">Voir les formations</a>
                 </div>
@@ -61,31 +57,30 @@
         <section class="section" id="projets" aria-labelledby="projets-title">
             <div class="container">
                 <div class="section-head">
-                    <p class="section-label mono">01 / Portfolio</p>
                     <h2 id="projets-title">Projets clients</h2>
                     <p class="section-intro">Une sélection de sites et d'applications livrés pour nos clients</p>
                 </div>
 
                 <div class="filters row g-3">
                     <div class="col-12 col-md-6">
-                        <label for="projects-search" class="filter-label mono">Recherche</label>
+                        <label for="projects-search" class="filter-label">Recherche</label>
                         <input type="search" id="projects-search" class="form-control" placeholder="Titre, clients...">
                     </div>
                     <div class="col-6 col-md-3">
-                        <label for="projects-tech" class="filter-label mono">Technologie</label>
+                        <label for="projects-tech" class="filter-label">Technologie</label>
                         <select id="projects-tech" class="form-select">
                             <option value="">Toutes</option>
                         </select>
                     </div>
                     <div class="col-6 col-md-3">
-                        <label for="projects-category" class="filter-label mono">Catégorie</label>
+                        <label for="projects-category" class="filter-label">Catégorie</label>
                         <select id="projects-category" class="form-select">
                             <option value="">Toutes</option>
                         </select>
                     </div>
                 </div>
 
-                <p class="results-count mono" id="projects-count" aria-live="polite"></p>
+                <p class="results-count" id="projects-count" aria-live="polite"></p>
 
                 <div class="loader" id="projects-loader" role="status">
                     <span class="visually-hidden">Chargement des projets...</span>
@@ -100,37 +95,36 @@
         <section class="section" id="formations" aria-labelledby="formations-title">
             <div class="container">
                 <div class="section-head">
-                    <p class="section-label mono">02 / Catalogue</p>
                     <h2 id="formations-title">Formations techniques</h2>
                     <p class="section-intro">Des formations encadrées par nos développeurs, du niveau débutant à avancé.</p>
                 </div>
 
                 <div class="filters row g-3">
                     <div class="col-12 col-lg-6">
-                        <label for="courses-search" class="filter-label mono">Recherche</label>
+                        <label for="courses-search" class="filter-label">Recherche</label>
                         <input type="search" id="courses-search" class="form-control" placeholder="Titre, formateur...">
                     </div>
                     <div class="col-12 col-md-4 col-lg-2">
-                        <label for="courses-category" class="filter-label mono">Catégorie</label>
+                        <label for="courses-category" class="filter-label">Catégorie</label>
                         <select id="courses-category" class="form-select">
                             <option value="">Toutes</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4 col-lg-2">
-                        <label for="courses-level" class="filter-label mono">Niveau</label>
+                        <label for="courses-level" class="filter-label">Niveau</label>
                         <select id="courses-level" class="form-select">
                             <option value="">Tous</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-4 col-lg-2">
-                        <label for="courses-tech" class="filter-label mono">Technologie</label>
+                        <label for="courses-tech" class="filter-label">Technologie</label>
                         <select id="courses-tech" class="form-select">
                             <option value="">Toutes</option>
                         </select>
                     </div>
                 </div>
 
-                <p class="results-count mono" id="courses-count" aria-live="polite"></p>
+                <p class="results-count" id="courses-count" aria-live="polite"></p>
 
                 <div class="loader" id="courses-loader" role="status">
                     <span class="visually-hidden">Chargement des formations...</span>
@@ -146,7 +140,7 @@
     <!-- ========== FOOTER ========== -->
     <footer class="site-footer">
         <div class="container footer-inner">
-            <p class="footer-copy mono">&copy; 2026 WebCraft Solutions</p>
+            <p class="footer-copy">&copy; 2026 WebCraft Solutions</p>
             <nav aria-label="Réseaux sociaux">
                 <ul class="footer-social">
                     <li><a href="https://www.linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn (nouvel onglet)">LinkedIn</a></li>

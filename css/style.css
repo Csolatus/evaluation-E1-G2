@@ -13,10 +13,9 @@
 
   /* Typographie */
   --font-main: "IBM Plex Sans", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", "Courier New", monospace;
 
   /* Formes et effets */
-  --radius: 2px;
+  --radius: 4px;
   --border: 1px solid var(--color-line);
   --transition: 0.2s ease;
 
@@ -39,21 +38,15 @@ body {
 
 h1, h2, h3 {
   font-weight: 700;
-  letter-spacing: -0.02em;
 }
 
 a {
   color: var(--color-accent);
-  text-underline-offset: 3px;
   transition: color var(--transition);
 }
 
 a:hover {
   color: var(--color-ink);
-}
-
-.mono {
-  font-family: var(--font-mono);
 }
 
 :focus-visible {
@@ -64,7 +57,7 @@ a:hover {
 /* ---------- 3. Boutons ---------- */
 .btn-ink {
   display: inline-block;
-  padding: 0.7rem 1.4rem;
+  padding: 0.6rem 1.2rem;
   font-weight: 600;
   text-decoration: none;
   color: var(--color-paper);
@@ -72,18 +65,34 @@ a:hover {
   border: 1px solid var(--color-ink);
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color var(--transition), color var(--transition), transform var(--transition);
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition);
 }
 
 .btn-ink:hover {
   color: var(--color-paper);
   background-color: var(--color-accent);
   border-color: var(--color-accent);
-  transform: translate(-2px, -2px);
 }
 
 .btn-ink--outline {
   color: var(--color-ink);
+  background-color: transparent;
+}
+
+.btn-ink--small {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.9rem;
+}
+
+.btn-ink:disabled {
+  color: var(--color-ink-soft);
+  border-color: var(--color-line);
+  cursor: not-allowed;
+}
+
+.btn-ink:disabled:hover {
   background-color: transparent;
 }
 
@@ -111,15 +120,6 @@ a:hover {
 .logo {
   font-weight: 700;
   color: var(--color-ink);
-  letter-spacing: -0.02em;
-}
-
-.logo-sub {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
 }
 
 .navbar-toggler {
@@ -134,34 +134,24 @@ a:hover {
 .nav-link:hover,
 .nav-link[aria-current="page"] {
   color: var(--color-accent);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 6px;
 }
 
 /* ---------- 6. Hero ---------- */
 .hero {
-  padding: 4rem 0 3rem;
+  padding: 3.5rem 0;
   border-bottom: var(--border);
 }
 
-.hero-label {
-  font-size: 0.85rem;
-  color: var(--color-accent);
-  margin-bottom: 1rem;
-}
-
 .hero-title {
-  font-size: 2.25rem;
-  line-height: 1.1;
-  margin-bottom: 1.25rem;
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
 .hero-subtitle {
   max-width: 38rem;
-  font-size: 1.05rem;
   color: var(--color-ink-soft);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 .hero-actions {
@@ -172,18 +162,12 @@ a:hover {
 
 /* ---------- 7. Sections ---------- */
 .section {
-  padding: 3.5rem 0;
+  padding: 3rem 0;
   border-bottom: var(--border);
 }
 
 .section-head {
-  margin-bottom: 2rem;
-}
-
-.section-label {
-  font-size: 0.85rem;
-  color: var(--color-accent);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .section-intro {
@@ -198,11 +182,9 @@ a:hover {
 
 .filter-label {
   display: block;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-ink-soft);
-  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
 }
 
 .form-control,
@@ -213,11 +195,6 @@ a:hover {
   transition: border-color var(--transition);
 }
 
-.form-control:hover,
-.form-select:hover {
-  border-color: var(--color-ink-soft);
-}
-
 .form-control:focus,
 .form-select:focus {
   border-color: var(--color-ink);
@@ -225,9 +202,9 @@ a:hover {
 }
 
 .results-count {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--color-ink-soft);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 /* ---------- 9. États : chargement et erreur ---------- */
@@ -242,12 +219,17 @@ a:hover {
 }
 
 .api-error {
-  padding: 1rem 1.25rem;
+  padding: 1rem;
   color: var(--color-error);
   background-color: var(--color-surface);
   border: 1px solid var(--color-error);
-  border-left-width: 4px;
   border-radius: var(--radius);
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-ink-soft);
 }
 
 /* ---------- 10. Footer ---------- */
@@ -264,7 +246,7 @@ a:hover {
 }
 
 .footer-copy {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   margin: 0;
 }
 
@@ -289,7 +271,7 @@ a:hover {
 /* ---------- 11. Modals ---------- */
 .modal-content {
   background-color: var(--color-surface);
-  border: 1px solid var(--color-ink);
+  border: var(--border);
   border-radius: var(--radius);
 }
 
@@ -299,12 +281,8 @@ a:hover {
 }
 
 .modal-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-}
-
-.modal-backdrop.show {
-  opacity: 0.7;
 }
 
 /* ---------- 12. Cartes ---------- */
@@ -316,46 +294,57 @@ a:hover {
   border: var(--border);
   border-radius: var(--radius);
   overflow: hidden;
-  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition);
 }
 
 .card-item:hover {
-  border-color: var(--color-ink);
-  transform: translate(-3px, -3px);
-  box-shadow: 3px 3px 0 var(--color-ink);
+  border-color: var(--color-ink-soft);
 }
 
 .card-item-img {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  border-bottom: var(--border);
 }
 
 .card-item-body {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+
+.card-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
-  padding: 1.25rem;
 }
 
 .card-item-meta {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--color-accent);
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
   margin: 0;
 }
 
 .card-item-title {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   margin: 0;
 }
 
-.card-item-sub {
+.card-item-sub,
+.card-item-info {
+  font-size: 0.9rem;
   color: var(--color-ink-soft);
   margin: 0;
+}
+
+.card-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
 }
 
 .badge-list {
@@ -368,40 +357,16 @@ a:hover {
 }
 
 .badge-tech {
-  font-size: 0.75rem;
-  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem;
   color: var(--color-accent);
   background-color: var(--color-accent-soft);
   border-radius: var(--radius);
 }
 
-.btn-ink--small {
-  align-self: flex-start;
-  margin-top: auto;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-}
-
-.empty-state {
-  padding: 2rem;
-  text-align: center;
-  color: var(--color-ink-soft);
-  border: 1px dashed var(--color-line);
-  border-radius: var(--radius);
-}
-
-.card-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .badge-status {
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 0.15rem 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.1rem 0.5rem;
   border: 1px solid currentColor;
   border-radius: var(--radius);
 }
@@ -414,57 +379,13 @@ a:hover {
   color: var(--color-error);
 }
 
-.course-facts {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.75rem;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 0.85rem;
-}
-
-.badge-level {
-  padding: 0.15rem 0.5rem;
-  color: var(--color-paper);
-  background-color: var(--color-ink);
-  border-radius: var(--radius);
-}
-
-.course-stats {
-  font-size: 0.85rem;
-  color: var(--color-ink-soft);
-  margin: 0;
-}
-
-.card-item-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: auto;
-}
-
-.btn-ink:disabled {
-  color: var(--color-ink-soft);
-  border-color: var(--color-line);
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-ink:disabled:hover {
-  background-color: transparent;
-}
-
 /* ---------- 13. Animations ---------- */
-@keyframes rise {
+@keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -474,16 +395,12 @@ a:hover {
   }
 }
 
-.anim-rise {
-  animation: rise 0.6s ease both;
+.fade-in {
+  animation: fade-in 0.8s ease both;
 }
 
-.anim-rise:nth-child(2) { animation-delay: 0.1s; }
-.anim-rise:nth-child(3) { animation-delay: 0.2s; }
-.anim-rise:nth-child(4) { animation-delay: 0.3s; }
-
 @media (prefers-reduced-motion: reduce) {
-  .anim-rise,
+  .fade-in,
   .loader {
     animation: none;
   }
@@ -492,15 +409,15 @@ a:hover {
 /* ---------- 14. Responsive (768px et +) ---------- */
 @media (min-width: 768px) {
   .hero {
-    padding: 6rem 0 5rem;
+    padding: 5rem 0;
   }
 
   .hero-title {
-    font-size: 3.5rem;
+    font-size: 2.75rem;
   }
 
   .section {
-    padding: 5rem 0;
+    padding: 4rem 0;
   }
 
   .footer-inner {
