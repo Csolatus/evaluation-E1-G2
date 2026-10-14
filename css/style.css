@@ -26,6 +26,10 @@
   --bs-border-radius: var(--radius);
   --bs-border-color: var(--color-line);
   --bs-link-color-rgb: 30, 77, 59;
+  --bs-form-valid-color: var(--color-success);
+  --bs-form-valid-border-color: var(--color-success);
+  --bs-form-invalid-color: var(--color-error);
+  --bs-form-invalid-border-color: var(--color-error);
 }
 
 /* ---------- 2. Base ---------- */
@@ -409,7 +413,59 @@ a:hover {
   color: var(--color-error);
 }
 
-/* ---------- 13. Animations ---------- */
+/* ---------- 13. Formulaire ---------- */
+.form-container {
+  max-width: 760px;
+}
+
+.form-note {
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+  margin: 0.5rem 0 0;
+}
+
+.required {
+  color: var(--color-error);
+}
+
+.form-panel {
+  padding: 1.25rem;
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+}
+
+.form-panel fieldset {
+  margin-bottom: 2rem;
+}
+
+.form-panel legend {
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: var(--border);
+}
+
+.legend-hint {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-ink-soft);
+}
+
+.form-label {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+}
+
+.form-control.is-valid:focus,
+.form-control.is-invalid:focus,
+.form-select.is-valid:focus,
+.form-select.is-invalid:focus {
+  box-shadow: none;
+}
+
+/* ---------- 14. Animations ---------- */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -436,7 +492,7 @@ a:hover {
   }
 }
 
-/* ---------- 14. Responsive (768px et +) ---------- */
+/* ---------- 15. Responsive (768px et +) ---------- */
 @media (min-width: 768px) {
   .hero {
     padding: 5rem 0;
@@ -454,5 +510,9 @@ a:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .form-panel {
+    padding: 2rem;
   }
 }
