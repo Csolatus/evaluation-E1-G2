@@ -63,7 +63,7 @@ const renderProjects = (projects) => {
                     <h3 class="card-item-title">${project.title}</h3>
                     <p class="card-item-sub">${project.client}</p>
                     <ul class="badge-list" aria-label="Technologies utilisées">${createBadges(project.technologies)}</ul>
-                    <button type="button" class="btn-ink btn-ink--small" data-project-id="${project.id}" aria-label="Voir les détails du projet ${project.title}">Voir détails</button>
+                    <button type="button" class="btn-ink btn-ink--small" data-bs-toggle="modal" data-bs-target="#project-modal" data-project-id="${project.id}" aria-label="Voir les détails du projet ${project.title}">Voir détails</button>
                 </div>
             </article>
         </div>
@@ -109,7 +109,7 @@ const renderCourses = (courses) => {
                     </p>
                     <ul class="badge-list" aria-label="Technologies abordées">${createBadges(course.technologies)}</ul>
                     <div class="card-item-actions">
-                        <button type="button" class="btn-ink btn-ink--small" data-course-id="${course.id}" aria-label="Voir les détails de la formation ${course.title}">Voir détails</button>
+                        <button type="button" class="btn-ink btn-ink--small" data-bs-toggle="modal" data-bs-target="#course-modal" data-course-id="${course.id}" aria-label="Voir les détails de la formation ${course.title}">Voir détails</button>
                         ${createSignupButton(course)}
                     </div>
                 </div>
@@ -188,6 +188,72 @@ const bindFilters = (searchId, selectIds, callback) => {
     });
 };
 
+// ========== MODALS ==========
+const createList = (items) => items
+    .map((item) => `<li>${item}</li>`)
+    .join('');
+
+const fillProjectModal = (event) => {
+    const id = Number(event.relatedTarget.dataset.projectId);
+    const project = projectsData.projects.find((item) => item.id === id);
+
+    document.getElementById('project-modal-title').textContent = project.title;
+    document.getElementById('project-modal-body').innerHTML = `
+        <img src="${project.image}" alt="Aperçu du projet ${project.title}" class="modal-img">
+        <p>${project.description}</p>
+        <dl class="modal-details">
+            <dt>Client</dt>
+            <dd>${project.client}</dd>
+            <dt>Catégorie</dt>
+            <dd>${project.category}</dd>
+            <dt>Année</dt>
+            <dd>${project.year}</dd>
+            <dt>Durée</dt>
+            <dd>${project.duration}</dd>
+        </dl>
+        <h3 class="modal-subtitle">Technologies</h3>
+        <ul class="badge-list">${createBadges(project.technologies)}</ul>
+        <h3 class="modal-subtitle">Fonctionnalités</h3>
+        <ul>${createList(project.features)}</ul>
+        <a href="${project.url}" target="_blank" rel="noopener">Voir le site du projet (nouvel onglet)</a>
+    `;
+};
+
+const fillCourseModal = (event) => {
+    const id = Number(event.relatedTarget.dataset.courseId);
+    const course = coursesData.courses.find((item) => item.id === id);
+    const cta = document.getElementById('course-modal-cta');
+
+    document.getElementById('course-modal-title').textContent = course.title;
+    document.getElementById('course-modal-body').innerHTML = `
+        <img src="${course.image}" alt="Illustration de la formation ${course.title}" class="modal-img">
+        <p>${course.description}</p>
+        <dl class="modal-details">
+            <dt>Formateur</dt>
+            <dd>${course.instructor}</dd>
+            <dt>Catégorie</dt>
+            <dd>${course.category}</dd>
+            <dt>Niveau</dt>
+            <dd>${course.level}</dd>
+            <dt>Durée</dt>
+            <dd>${course.duration}</dd>
+            <dt>Prix</dt>
+            <dd>${course.price} €</dd>
+            <dt>Note</dt>
+            <dd>${course.rating} / 5 (${course.students} étudiants)</dd>
+            <dt>Places</dt>
+            <dd>${course.available ? 'Disponible' : 'Complet'}</dd>
+        </dl>
+        <h3 class="modal-subtitle">Technologies</h3>
+        <ul class="badge-list">${createBadges(course.technologies)}</ul>
+        <h3 class="modal-subtitle">Programme</h3>
+        <ol>${createList(course.modules)}</ol>
+    `;
+
+    cta.href = `inscription.html?formation=${course.id}`;
+    cta.hidden = !course.available;
+};
+
 // ========== INITIALISATION ==========
 const initHome = async () => {
     [projectsData, coursesData] = await Promise.all([
@@ -210,6 +276,7 @@ const initHome = async () => {
         fillSelect('projects-category', getUniqueValues(projectsData.projects, 'category'));
         renderProjects(projectsData.projects);
         bindFilters('projects-search', ['projects-tech', 'projects-category'], filterProjects);
+        document.getElementById('project-modal').addEventListener('show.bs.modal', fillProjectModal);
     }
 
     if (coursesData) {
@@ -218,6 +285,7 @@ const initHome = async () => {
         fillSelect('courses-tech', getUniqueValues(coursesData.courses, 'technologies'));
         renderCourses(coursesData.courses);
         bindFilters('courses-search', ['courses-category', 'courses-level', 'courses-tech'], filterCourses);
+        document.getElementById('course-modal').addEventListener('show.bs.modal', fillCourseModal);
     }
 };
 

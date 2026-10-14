@@ -285,6 +285,36 @@ a:hover {
   font-weight: 700;
 }
 
+.modal-img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.modal-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+  margin: 1rem 0;
+}
+
+.modal-details dt {
+  font-weight: 600;
+}
+
+.modal-details dd {
+  margin: 0;
+  color: var(--color-ink-soft);
+}
+
+.modal-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+}
+
 /* ---------- 12. Cartes ---------- */
 .card-item {
   display: flex;
