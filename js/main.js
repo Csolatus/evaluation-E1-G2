@@ -254,6 +254,47 @@ const fillCourseModal = (event) => {
     cta.hidden = !course.available;
 };
 
+// ========== INSCRIPTION ==========
+const fillCourseSelect = (courses) => {
+    const options = courses
+        .filter((course) => course.available)
+        .map((course) => `<option value="${course.id}">${course.title} (${course.level})</option>`)
+        .join('');
+
+    document.getElementById('course').insertAdjacentHTML('beforeend', options);
+};
+
+const preselectCourse = () => {
+    const id = new URLSearchParams(window.location.search).get('formation');
+    const select = document.getElementById('course');
+
+    if (id && select.querySelector(`option[value="${id}"]`)) {
+        select.value = id;
+    }
+};
+
+const initSignup = async () => {
+    const select = document.getElementById('course');
+    const placeholder = select.options[0];
+    const apiError = document.getElementById('course-api-error');
+
+    select.disabled = true;
+    placeholder.textContent = 'Chargement des formations...';
+
+    try {
+        const data = await fetchData(API_COURSES);
+        fillCourseSelect(data.courses);
+        preselectCourse();
+        select.disabled = false;
+    } catch (err) {
+        console.error(err);
+        apiError.textContent = 'Impossible de charger la liste des formations. Rechargez la page pour réessayer.';
+        apiError.hidden = false;
+    } finally {
+        placeholder.textContent = 'Choisissez une formation';
+    }
+};
+
 // ========== INITIALISATION ==========
 const initHome = async () => {
     [projectsData, coursesData] = await Promise.all([
@@ -291,4 +332,8 @@ const initHome = async () => {
 
 if (document.getElementById('projects-grid')) {
     initHome();
+}
+
+if (document.getElementById('signup-form')) {
+    initSignup();
 }
