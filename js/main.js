@@ -277,13 +277,14 @@ const initSignup = async () => {
     const select = document.getElementById('course');
     const placeholder = select.options[0];
     const apiError = document.getElementById('course-api-error');
-
+    const loader = document.getElementById('course-loader');
     const form = document.getElementById('signup-form');
 
     bindValidation(form);
     form.addEventListener('submit', handleSubmit);
 
     select.disabled = true;
+    loader.hidden = false;
     placeholder.textContent = 'Chargement des formations...';
 
     try {
@@ -296,6 +297,7 @@ const initSignup = async () => {
         apiError.textContent = 'Impossible de charger la liste des formations. Rechargez la page pour réessayer.';
         apiError.hidden = false;
     } finally {
+        loader.hidden = true;
         placeholder.textContent = 'Choisissez une formation';
     }
 };

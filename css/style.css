@@ -13,9 +13,13 @@
 
   /* Typographie */
   --font-main: "IBM Plex Sans", Arial, sans-serif;
+  --text-xs: 0.8rem;
+  --text-sm: 0.85rem;
+  --text-md: 0.9rem;
 
   /* Formes et effets */
   --radius: 4px;
+  --touch-size: 44px;
   --border: 1px solid var(--color-line);
   --transition: 0.2s ease;
 
@@ -73,13 +77,19 @@ a:hover {
   border: 1px solid var(--color-ink);
   border-radius: var(--radius);
   cursor: pointer;
-  transition: background-color var(--transition), border-color var(--transition), color var(--transition);
+  transition: background-color var(--transition), border-color var(--transition), color var(--transition), transform var(--transition);
 }
 
 .btn-ink:hover {
   color: var(--color-paper);
   background-color: var(--color-accent);
   border-color: var(--color-accent);
+}
+
+.btn-ink:active {
+  background-color: var(--color-ink);
+  border-color: var(--color-ink);
+  transform: scale(0.97);
 }
 
 .btn-ink--outline {
@@ -90,8 +100,9 @@ a:hover {
 .btn-ink--small {
   align-self: flex-start;
   margin-top: auto;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.9rem;
+  min-height: var(--touch-size);
+  padding: 0.6rem 1rem;
+  font-size: var(--text-md);
 }
 
 .btn-ink:disabled {
@@ -135,13 +146,22 @@ a:hover {
 }
 
 .nav-link {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-size);
   color: var(--color-ink);
   font-weight: 500;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
 .nav-link[aria-current="page"] {
   color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
 }
 
 /* ---------- 6. Hero ---------- */
@@ -190,7 +210,7 @@ a:hover {
 
 .filter-label {
   display: block;
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
@@ -212,7 +232,7 @@ a:hover {
 }
 
 .results-count {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   color: var(--color-ink-soft);
   margin-bottom: 1rem;
 }
@@ -226,6 +246,13 @@ a:hover {
   border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
+}
+
+.loader--small {
+  width: 24px;
+  height: 24px;
+  margin: 0.5rem 0 0;
+  border-width: 2px;
 }
 
 .api-error {
@@ -256,7 +283,7 @@ a:hover {
 }
 
 .footer-copy {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   margin: 0;
 }
 
@@ -269,6 +296,9 @@ a:hover {
 }
 
 .footer-social a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-size);
   color: var(--color-paper);
   text-decoration: none;
 }
@@ -299,7 +329,7 @@ a:hover {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--color-ink-soft);
   background-color: var(--color-accent-soft);
   border-radius: var(--radius);
@@ -348,7 +378,7 @@ a:hover {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--color-ink-soft);
   background-color: var(--color-accent-soft);
 }
@@ -369,7 +399,7 @@ a:hover {
 }
 
 .card-item-meta {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--color-ink-soft);
   margin: 0;
 }
@@ -381,7 +411,7 @@ a:hover {
 
 .card-item-sub,
 .card-item-info {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   color: var(--color-ink-soft);
   margin: 0;
 }
@@ -403,7 +433,7 @@ a:hover {
 }
 
 .badge-tech {
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   padding: 0.1rem 0.5rem;
   color: var(--color-accent);
   background-color: var(--color-accent-soft);
@@ -411,7 +441,7 @@ a:hover {
 }
 
 .badge-status {
-  font-size: 0.8rem;
+  font-size: var(--text-xs);
   padding: 0.1rem 0.5rem;
   border: 1px solid currentColor;
   border-radius: var(--radius);
@@ -431,7 +461,7 @@ a:hover {
 }
 
 .form-note {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   color: var(--color-ink-soft);
   margin: 0.5rem 0 0;
 }
@@ -460,7 +490,7 @@ a:hover {
 }
 
 .legend-hint {
-  font-size: 0.9rem;
+  font-size: var(--text-md);
   font-weight: 400;
   color: var(--color-ink-soft);
 }
