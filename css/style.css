@@ -307,7 +307,90 @@ a:hover {
   opacity: 0.7;
 }
 
-/* ---------- 12. Animations ---------- */
+/* ---------- 12. Cartes ---------- */
+.card-item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+
+.card-item:hover {
+  border-color: var(--color-ink);
+  transform: translate(-3px, -3px);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.card-item-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-bottom: var(--border);
+}
+
+.card-item-body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 0.5rem;
+  padding: 1.25rem;
+}
+
+.card-item-meta {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  margin: 0;
+}
+
+.card-item-title {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.card-item-sub {
+  color: var(--color-ink-soft);
+  margin: 0;
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.badge-tech {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  color: var(--color-accent);
+  background-color: var(--color-accent-soft);
+  border-radius: var(--radius);
+}
+
+.btn-ink--small {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.empty-state {
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-ink-soft);
+  border: 1px dashed var(--color-line);
+  border-radius: var(--radius);
+}
+
+/* ---------- 13. Animations ---------- */
 @keyframes rise {
   from {
     opacity: 0;
@@ -340,7 +423,7 @@ a:hover {
   }
 }
 
-/* ---------- 13. Responsive (768px et +) ---------- */
+/* ---------- 14. Responsive (768px et +) ---------- */
 @media (min-width: 768px) {
   .hero {
     padding: 6rem 0 5rem;
