@@ -443,6 +443,29 @@ const handleSubmit = (event) => {
     bootstrap.Modal.getOrCreateInstance('#success-modal').show();
 };
 
+// ========== NAVIGATION ==========
+const initNavigation = () => {
+    const menu = document.getElementById('main-menu');
+
+    menu.querySelectorAll('.nav-link').forEach((link) => {
+        link.addEventListener('click', (event) => {
+            const hash = new URL(link.href).hash;
+            const target = hash ? document.querySelector(hash) : null;
+
+            if (!menu.classList.contains('show') || !target) {
+                return;
+            }
+
+            event.preventDefault();
+            menu.addEventListener('hidden.bs.collapse', () => {
+                history.replaceState(null, '', hash);
+                target.scrollIntoView();
+            }, { once: true });
+            bootstrap.Collapse.getOrCreateInstance(menu).hide();
+        });
+    });
+};
+
 // ========== INITIALISATION ==========
 const initHome = async () => {
     [projectsData, coursesData] = await Promise.all([
@@ -477,6 +500,8 @@ const initHome = async () => {
         document.getElementById('course-modal').addEventListener('show.bs.modal', fillCourseModal);
     }
 };
+
+initNavigation();
 
 if (document.getElementById('projects-grid')) {
     initHome();

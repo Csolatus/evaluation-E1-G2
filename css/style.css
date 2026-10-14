@@ -33,6 +33,10 @@
 }
 
 /* ---------- 2. Base ---------- */
+html {
+  scroll-padding-top: 5rem;
+}
+
 body {
   font-family: var(--font-main);
   color: var(--color-ink);
@@ -203,6 +207,8 @@ a:hover {
 .form-select:focus {
   border-color: var(--color-ink);
   box-shadow: none;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
 }
 
 .results-count {
@@ -293,6 +299,9 @@ a:hover {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  background-color: var(--color-accent-soft);
   border-radius: var(--radius);
   margin-bottom: 1rem;
 }
@@ -339,6 +348,9 @@ a:hover {
   width: 100%;
   aspect-ratio: 16 / 10;
   object-fit: cover;
+  font-size: 0.85rem;
+  color: var(--color-ink-soft);
+  background-color: var(--color-accent-soft);
 }
 
 .card-item-body {
