@@ -458,6 +458,10 @@ a:hover {
   margin-bottom: 0.25rem;
 }
 
+.form-text.is-complete {
+  color: var(--color-success);
+}
+
 .form-control.is-valid:focus,
 .form-control.is-invalid:focus,
 .form-select.is-valid:focus,

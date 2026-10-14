@@ -278,6 +278,8 @@ const initSignup = async () => {
     const placeholder = select.options[0];
     const apiError = document.getElementById('course-api-error');
 
+    bindValidation(document.getElementById('signup-form'));
+
     select.disabled = true;
     placeholder.textContent = 'Chargement des formations...';
 
@@ -293,6 +295,111 @@ const initSignup = async () => {
     } finally {
         placeholder.textContent = 'Choisissez une formation';
     }
+};
+
+// ========== VALIDATION DU FORMULAIRE ==========
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^\+\d{1,3}(?:[\s.-]?\d){6,14}$/;
+const MOTIVATION_MIN = 50;
+
+const rules = {
+    firstname: (value) => {
+        if (!value) {
+            return 'Veuillez saisir votre prénom.';
+        }
+        if (value.length < 2) {
+            return 'Le prénom doit contenir au moins 2 caractères.';
+        }
+        return '';
+    },
+    lastname: (value) => {
+        if (!value) {
+            return 'Veuillez saisir votre nom.';
+        }
+        if (value.length < 2) {
+            return 'Le nom doit contenir au moins 2 caractères.';
+        }
+        return '';
+    },
+    email: (value) => {
+        if (!value) {
+            return 'Veuillez saisir votre adresse email.';
+        }
+        if (!EMAIL_REGEX.test(value)) {
+            return 'Adresse email invalide. Exemple : nom@exemple.com';
+        }
+        return '';
+    },
+    phone: (value) => {
+        if (!value) {
+            return 'Veuillez saisir votre numéro de téléphone.';
+        }
+        if (!PHONE_REGEX.test(value)) {
+            return 'Numéro invalide. Commencez par + et l\'indicatif du pays, par exemple +33 6 12 34 56 78.';
+        }
+        return '';
+    },
+    experience: (value) => {
+        if (!value) {
+            return '';
+        }
+        const years = Number(value);
+        if (!Number.isInteger(years) || years < 0 || years > 50) {
+            return 'L\'expérience doit être un nombre entier d\'années, entre 0 et 50.';
+        }
+        return '';
+    },
+    course: (value) => (value ? '' : 'Veuillez choisir une formation.'),
+    level: (value) => (value ? '' : 'Veuillez indiquer votre niveau.'),
+    motivation: (value) => {
+        if (!value) {
+            return 'Veuillez expliquer votre motivation.';
+        }
+        if (value.length < MOTIVATION_MIN) {
+            return `Encore ${MOTIVATION_MIN - value.length} caractère(s), ${MOTIVATION_MIN} minimum.`;
+        }
+        return '';
+    }
+};
+
+const validateField = (field) => {
+    const value = field.value.trim();
+    const message = rules[field.name](value);
+    const isValid = message === '';
+
+    document.getElementById(`${field.name}-error`).textContent = message;
+    field.classList.toggle('is-invalid', !isValid);
+    field.classList.toggle('is-valid', isValid && value !== '');
+    field.setAttribute('aria-invalid', String(!isValid));
+
+    return isValid;
+};
+
+const updateMotivationCounter = () => {
+    const length = document.getElementById('motivation').value.trim().length;
+    const counter = document.getElementById('motivation-count');
+
+    counter.textContent = `${length} / ${MOTIVATION_MIN} caractères minimum`;
+    counter.classList.toggle('is-complete', length >= MOTIVATION_MIN);
+};
+
+const bindValidation = (form) => {
+    const fields = [...form.elements].filter((field) => rules[field.name]);
+
+    fields.forEach((field) => {
+        field.addEventListener('blur', () => {
+            field.dataset.touched = 'true';
+            validateField(field);
+        });
+
+        field.addEventListener('input', () => {
+            if (field.dataset.touched || field.tagName === 'SELECT') {
+                validateField(field);
+            }
+        });
+    });
+
+    document.getElementById('motivation').addEventListener('input', updateMotivationCounter);
 };
 
 // ========== INITIALISATION ==========
