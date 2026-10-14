@@ -278,7 +278,10 @@ const initSignup = async () => {
     const placeholder = select.options[0];
     const apiError = document.getElementById('course-api-error');
 
-    bindValidation(document.getElementById('signup-form'));
+    const form = document.getElementById('signup-form');
+
+    bindValidation(form);
+    form.addEventListener('submit', handleSubmit);
 
     select.disabled = true;
     placeholder.textContent = 'Chargement des formations...';
@@ -383,10 +386,10 @@ const updateMotivationCounter = () => {
     counter.classList.toggle('is-complete', length >= MOTIVATION_MIN);
 };
 
-const bindValidation = (form) => {
-    const fields = [...form.elements].filter((field) => rules[field.name]);
+const getValidatedFields = (form) => [...form.elements].filter((field) => rules[field.name]);
 
-    fields.forEach((field) => {
+const bindValidation = (form) => {
+    getValidatedFields(form).forEach((field) => {
         field.addEventListener('blur', () => {
             field.dataset.touched = 'true';
             validateField(field);
@@ -400,6 +403,44 @@ const bindValidation = (form) => {
     });
 
     document.getElementById('motivation').addEventListener('input', updateMotivationCounter);
+};
+
+// ========== SOUMISSION DU FORMULAIRE ==========
+const resetForm = (form) => {
+    form.reset();
+
+    [...form.elements].forEach((field) => {
+        field.classList.remove('is-valid', 'is-invalid');
+        field.removeAttribute('aria-invalid');
+        delete field.dataset.touched;
+    });
+
+    updateMotivationCounter();
+};
+
+const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const results = getValidatedFields(form).map((field) => {
+        field.dataset.touched = 'true';
+        return validateField(field);
+    });
+
+    if (!results.every(Boolean)) {
+        form.querySelector('.is-invalid').focus();
+        return;
+    }
+
+    const firstname = document.getElementById('firstname').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const course = document.getElementById('course');
+    const courseTitle = course.options[course.selectedIndex].text;
+
+    document.getElementById('success-message').textContent = `Merci ${firstname}, votre demande d'inscription à la formation « ${courseTitle} » a bien été enregistrée. Un conseiller vous contactera sous 48h à l'adresse ${email}.`;
+
+    resetForm(form);
+    bootstrap.Modal.getOrCreateInstance('#success-modal').show();
 };
 
 // ========== INITIALISATION ==========
